@@ -1,26 +1,37 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Switch, Route, Redirect } from 'react-router-dom'
 
-function App() {
+import { useSelector } from './reducers'
+import Auth from './pages/Auth'
+import Contacts from './pages/Contacts'
+import MainHeader from './components/navigation/MainHeader'
+
+const App = () => {
+  const { authInfo } = useSelector(state => state.auth)
+  if (authInfo.info.token) {
+    return (
+      <>
+        <MainHeader />
+        <Switch>
+          <Route path="/contacts">
+            <Contacts />
+          </Route>
+          <Redirect to="/contacts" />
+        </Switch>
+      </>
+    );
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Switch>
+      <Route path="/" >
+        <Auth />
+      </Route>
+      <Redirect to="/" />
+    </Switch>
   );
 }
+
+
+
 
 export default App;

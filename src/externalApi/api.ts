@@ -1,0 +1,1 @@
+export const mainHost = "https://my-json-server.typicode.com/nikitashaban/contactsFakeDb"
